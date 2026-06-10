@@ -288,6 +288,7 @@ function renderFeaturedGrid() {
 }
 
 function renderCompactCatalog() {
+  if (!compactGrid) return;
   compactGrid.innerHTML = '';
   // Show first 12 Surahs in home screen catalog
   const featuredLocal = songsData.local.slice(0, 12);
@@ -375,17 +376,16 @@ function renderLibraryView() {
   };
 
   // Add default albums
-  addCard('cloud', 'Cloud Recitations', 'Idris Abkar', 'idris Abkar_Full/idrees-abkar-banner.jpg', 'Album');
-  addCard('local', 'Full Quran Recitation', 'Idris Abkar', 'idris Abkar_Full/idrees-abkar-banner.jpg', 'Album');
+  addCard('cloud', 'Cloud Recitations', 'Idris Abkar', 'https://res.cloudinary.com/dnudhbjle/image/upload/q_auto/f_auto/v1781086631/idrees-abkar-banner_kmq9ly.jpg', 'Album');
 
   // Add Liked Songs
   if (likedTracks.length > 0) {
-    addCard('liked', 'Liked Songs', `${likedTracks.length} songs`, 'idris Abkar_Full/idrees-abkar-banner.jpg', 'Playlist');
+    addCard('liked', 'Liked Songs', `${likedTracks.length} songs`, 'https://res.cloudinary.com/dnudhbjle/image/upload/q_auto/f_auto/v1781086631/idrees-abkar-banner_kmq9ly.jpg', 'Playlist');
   }
 
   // Add custom playlists
   customPlaylists.forEach(pl => {
-    addCard(pl.id, pl.name, `${pl.tracks.length} songs`, 'idris Abkar_Full/idrees-abkar-banner.jpg', 'Playlist');
+    addCard(pl.id, pl.name, `${pl.tracks.length} songs`, 'https://res.cloudinary.com/dnudhbjle/image/upload/q_auto/f_auto/v1781086631/idrees-abkar-banner_kmq9ly.jpg', 'Playlist');
   });
   
   lucide.createIcons();
@@ -395,7 +395,7 @@ function renderLibraryView() {
 function setupPlaylistView(id) {
   let name = '';
   let desc = '';
-  let cover = 'idris Abkar_Full/idrees-abkar-banner.jpg';
+  let cover = 'https://res.cloudinary.com/dnudhbjle/image/upload/q_auto/f_auto/v1781086631/idrees-abkar-banner_kmq9ly.jpg';
   let tracks = [];
   let isCustom = false;
 
@@ -1084,16 +1084,16 @@ function setupEventListeners() {
   });
 
   // Default Album Card click listeners (Home View)
-  cardCloudPlaylist.addEventListener('click', () => navigateTo('playlist', 'cloud'));
-  cardLocalPlaylist.addEventListener('click', () => navigateTo('playlist', 'local'));
+  if (cardCloudPlaylist) cardCloudPlaylist.addEventListener('click', () => navigateTo('playlist', 'cloud'));
+  if (cardLocalPlaylist) cardLocalPlaylist.addEventListener('click', () => navigateTo('playlist', 'local'));
 
   // Hero Play/Pause Click
   heroPlayBtn.addEventListener('click', () => {
-    if (activePlaylistId === 'local') {
+    if (activePlaylistId === 'cloud') {
       togglePlay();
     } else {
-      // Default playing full local Quran playlist
-      playPlaylistDirectly(songsData.local, 'local');
+      // Default playing full cloud Quran playlist
+      playPlaylistDirectly(songsData.cloud, 'cloud');
     }
   });
 
