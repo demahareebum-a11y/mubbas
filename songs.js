@@ -1,6 +1,26 @@
 // Automatically generated songs database
 const songsData = {
   "cloud": [
+     {
+      "id": "cloud-92",
+      "title": "Surah Al-Lail",
+      "surahNo": 92,
+      "url": "https://res.cloudinary.com/dnudhbjle/video/upload/v1781086627/092_-_Surat_Al-Lail_x7nass.mp3",
+      "artist": "Idris Abkar",
+      "album": "Cloud Recitations",
+      "cover": "https://res.cloudinary.com/dnudhbjle/image/upload/q_auto/f_auto/v1781086631/idrees-abkar-banner_kmq9ly.jpg",
+      "isCloud": true
+    },
+    {
+      "id": "cloud-93",
+      "title": "Surah Ad-Dhuha",
+      "surahNo": 93,
+      "url": "https://res.cloudinary.com/dnudhbjle/video/upload/v1781086627/093_-_Surat_Ad-Dhuha_fasemz.mp3",
+      "artist": "Idris Abkar",
+      "album": "Cloud Recitations",
+      "cover": "https://res.cloudinary.com/dnudhbjle/image/upload/q_auto/f_auto/v1781086631/idrees-abkar-banner_kmq9ly.jpg",
+      "isCloud": true
+    },
     {
       "id": "cloud-106",
       "title": "Surah Quraish",
