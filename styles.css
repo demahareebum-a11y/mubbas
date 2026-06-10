@@ -46,6 +46,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 768px) {
+  body {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
 /* App Grid Layout */
 #app {
   display: grid;
@@ -1781,55 +1789,195 @@ input[type="range"] {
   to { opacity: 0; transform: translateY(-10px); }
 }
 
-/* RESPONSIVENESS AND SMALL SCREEN ADAPTATION */
-@media (max-width: 768px) {
-  #app {
-    grid-template-columns: 72px 1fr;
+/* RESPONSIVENESS — TABLET (max 900px) */
+@media (max-width: 900px) {
+  .hero-artist-name {
+    font-size: 40px;
   }
-  
-  .sidebar {
-    padding: 20px 4px 10px 4px;
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
   }
-  
-  .logo-text,
-  .nav-item span,
-  .action-item span,
-  .sidebar-playlists-container {
-    display: none;
-  }
-  
-  .logo {
-    justify-content: center;
-    padding: 0;
-  }
-  
-  .nav-item {
-    justify-content: center;
-    padding: 12px;
-  }
-  
-  .action-item {
-    justify-content: center;
-    padding: 12px;
-  }
-  
-  .sidebar-divider {
-    margin: 8px 4px;
-  }
-  
-  .search-bar-container {
+  .playlist-cover-wrapper {
     width: 180px;
-  }
-
-  .player-left {
-    min-width: 120px;
-  }
-  
-  .player-right {
-    min-width: 120px;
-  }
-
-  .volume-container {
-    display: none;
+    height: 180px;
   }
 }
+
+/* RESPONSIVENESS — MOBILE (max 768px) */
+@media (max-width: 768px) {
+  /* ── Layout: kill sidebar, use bottom-nav ── */
+  .sidebar { display: none; }
+
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto auto;
+    grid-template-areas:
+      "main"
+      "player"
+      "mobile-nav";
+  }
+
+  /* ── Main header ── */
+  .main-header {
+    height: 52px;
+    padding: 8px 12px;
+  }
+
+  .content-scroll-area {
+    padding-top: 52px;
+    padding-bottom: 8px;
+  }
+
+  .content-view {
+    padding: 16px 12px 24px;
+  }
+
+  /* hide back/forward nav arrows on mobile to save space */
+  #nav-back, #nav-forward { display: none; }
+
+  /* search bar takes remaining width */
+  .search-bar-container {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* profile: shrink */
+  .upgrade-btn { display: none; }
+  .profile-name { display: none; }
+  .profile-dropdown { padding: 4px; }
+
+  /* ── Hero Banner ── */
+  .hero-banner { height: 200px; }
+  .hero-artist-name { font-size: 32px; letter-spacing: -1px; }
+  .hero-content { padding: 16px; gap: 8px; }
+  .hero-actions { flex-wrap: wrap; gap: 8px; }
+  .btn { padding: 10px 20px; font-size: 13px; }
+
+  /* ── Cards ── */
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .compact-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* ── Playlist header: stack vertically ── */
+  .playlist-header-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .playlist-cover-wrapper {
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+  }
+  .playlist-header-details { align-items: center; }
+
+  /* hide album column in songs table on mobile */
+  .col-album, .songs-table th.col-album { display: none; }
+
+  /* ── Player bar: vertical stacked ── */
+  .player-bar {
+    flex-direction: column;
+    height: auto;
+    padding: 8px 12px 12px;
+    gap: 4px;
+  }
+  .player-left {
+    width: 100%;
+    min-width: 0;
+  }
+  .player-center {
+    width: 100%;
+    max-width: none;
+    order: -1; /* controls above song info */
+  }
+  .player-right {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+  }
+  .volume-container { display: none; }
+  .now-playing-cover { width: 44px; height: 44px; }
+  .now-playing-title { font-size: 13px; }
+  .now-playing-artist { font-size: 11px; }
+
+  /* progress time labels */
+  .time-label { min-width: 24px; font-size: 10px; }
+
+  /* ── Bottom Mobile Navigation Bar ── */
+  .mobile-bottom-nav {
+    grid-area: mobile-nav;
+    display: flex !important;
+    background-color: #121212;
+    border-top: 1px solid #282828;
+    padding: 8px 0 env(safe-area-inset-bottom, 8px);
+    z-index: 200;
+  }
+
+  /* ── Toasts above player ── */
+  .toast-container {
+    bottom: calc(var(--player-height) + 80px);
+  }
+
+  /* ── Fullscreen art ── */
+  .fullscreen-art-wrapper { width: 240px; height: 240px; }
+  .fullscreen-meta h2 { font-size: 24px; }
+}
+
+/* ── Mobile Bottom Nav (hidden on desktop) ── */
+.mobile-bottom-nav {
+  display: none;
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 16px;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: var(--transition-fast);
+  flex: 1;
+  letter-spacing: 0.3px;
+}
+
+.mobile-nav-item i {
+  width: 22px;
+  height: 22px;
+}
+
+.mobile-nav-item.active {
+  color: var(--text-primary);
+}
+
+.mobile-nav-item.active i {
+  color: var(--spotify-green);
+}
+
+/* ── Very small phones (max 380px) ── */
+@media (max-width: 380px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-artist-name { font-size: 26px; }
+  .hero-banner { height: 170px; }
+  .mobile-nav-item { padding: 6px 8px; font-size: 9px; }
+}
+
