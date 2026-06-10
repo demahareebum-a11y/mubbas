@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mubbas - Web Player: Quran Recitation</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A premium Mubbas Player featuring Quran recitations by Idris Abkar, with dynamic playlists, search, and audio player controls.">
+  <link rel="icon" type="image/png" href="mubbas-logo.png">
+  
+  <!-- Google Fonts - Inter for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="mubbas-logo.png" alt="Mubbas Logo" class="mubbas-logo-img">
+        <span class="logo-text">Mubbas</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="nav-item active" data-view="home">
+            <i data-lucide="home"></i>
+            <span>Home</span>
+          </li>
+          <li class="nav-item" data-view="search">
+            <i data-lucide="search"></i>
+            <span>Search</span>
+          </li>
+          <li class="nav-item" data-view="library">
+            <i data-lucide="library"></i>
+            <span>Your Library</span>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-library-actions">
+        <div class="action-item" id="create-playlist-btn">
+          <div class="action-icon-wrapper create-playlist">
+            <i data-lucide="plus"></i>
+          </div>
+          <span>Create Playlist</span>
+        </div>
+        <div class="action-item" data-view="liked" id="liked-songs-nav">
+          <div class="action-icon-wrapper liked-songs">
+            <i data-lucide="heart"></i>
+          </div>
+          <span>Liked Songs</span>
+        </div>
+      </div>
+
+      <hr class="sidebar-divider">
+
+      <!-- Custom Playlists List -->
+      <div class="sidebar-playlists-container">
+        <ul id="sidebar-playlists">
+          <!-- Dynamically populated -->
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+      <!-- Top Sticky Navigation Bar -->
+      <header class="main-header">
+        <div class="header-navigation">
+          <button class="nav-arrow" id="nav-back" disabled><i data-lucide="chevron-left"></i></button>
+          <button class="nav-arrow" id="nav-forward" disabled><i data-lucide="chevron-right"></i></button>
+          
+          <!-- Search Bar Container (only visible in Search View) -->
+          <div class="search-bar-container hidden" id="header-search-container">
+            <i data-lucide="search"></i>
+            <input type="text" id="search-input" placeholder="What do you want to listen to?" autocomplete="off">
+            <button class="clear-search-btn hidden" id="clear-search-btn"><i data-lucide="x"></i></button>
+          </div>
+        </div>
+        
+        <div class="header-profile">
+          <button class="upgrade-btn">Upgrade</button>
+          <div class="profile-dropdown">
+            <img src="idris Abkar_Full/idrees-abkar-banner.jpg" alt="Profile" class="profile-avatar">
+            <span class="profile-name">Guest Reciter</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-scroll-area">
+        
+        <!-- View 1: Home View -->
+        <section id="view-home" class="content-view">
+          <!-- Album / Artist Hero Banner -->
+          <div class="hero-banner">
+            <div class="hero-backdrop" style="background-image: url('idris Abkar_Full/idrees-abkar-banner.jpg');"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+              <span class="verified-badge"><i data-lucide="badge-check"></i> Verified Reciter</span>
+              <h1 class="hero-artist-name">Idris Abkar</h1>
+              <p class="hero-listeners">Full Quran Audio Collection</p>
+              <div class="hero-actions">
+                <button class="btn btn-play-artist" id="hero-play-btn">
+                  <i data-lucide="play" class="icon-play"></i>
+                  <i data-lucide="pause" class="icon-pause hidden"></i>
+                  <span>Play</span>
+                </button>
+                <button class="btn btn-outline" id="hero-follow-btn">Follow</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-sections-container">
+            <!-- Featured Playlist Section (The 6 Cloud tracks) -->
+            <div class="home-section">
+              <h2>Featured Cloud Recitations</h2>
+              <p class="section-desc">Pasted cloud tracks optimized for smooth streaming</p>
+              <div class="cards-grid" id="featured-grid">
+                <!-- Dynamically populated with cloud song cards -->
+              </div>
+            </div>
+
+            <!-- Full Library Albums -->
+            <div class="home-section">
+              <h2>Popular Albums</h2>
+              <div class="cards-grid">
+                <!-- Card 1: Cloud Playlist -->
+                <div class="mubbas-card" id="card-cloud-playlist">
+                  <div class="card-image-wrapper">
+                    <img src="idris Abkar_Full/idrees-abkar-banner.jpg" alt="Cloud Playlist">
+                    <button class="card-play-btn"><i data-lucide="play"></i></button>
+                  </div>
+                  <h3>Cloud Surahs</h3>
+                  <p>6 Featured cloud-hosted Surahs</p>
+                </div>
+
+                <!-- Card 2: Full Quran Recitation -->
+                <div class="mubbas-card" id="card-local-playlist">
+                  <div class="card-image-wrapper">
+                    <img src="idris Abkar_Full/idrees-abkar-banner.jpg" alt="Full Quran">
+                    <button class="card-play-btn"><i data-lucide="play"></i></button>
+                  </div>
+                  <h3>Full Quran</h3>
+                  <p>All 114 Surahs by Idris Abkar</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- List Grid of all Surahs (compact list for quick play) -->
+            <div class="home-section">
+              <h2>All Surahs Catalog</h2>
+              <div class="compact-grid" id="all-surahs-compact-grid">
+                <!-- Dynamically populated with compact items -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- View 2: Search View -->
+        <section id="view-search" class="content-view hidden">
+          <div class="search-view-container">
+            <!-- Default Categories (shown when search is empty) -->
+            <div id="search-categories">
+              <h2>Browse all</h2>
+              <div class="categories-grid">
+                <div class="category-card" style="background-color: rgb(39, 133, 106);" data-search-tag="Surah Al-">
+                  <h3>Al- Surahs</h3>
+                </div>
+                <div class="category-card" style="background-color: rgb(30, 50, 100);" data-search-tag="Surah An-">
+                  <h3>An- Surahs</h3>
+                </div>
+                <div class="category-card" style="background-color: rgb(141, 103, 171);" data-search-tag="Short">
+                  <h3>Short Surahs</h3>
+                </div>
+                <div class="category-card" style="background-color: rgb(232, 17, 137);" data-search-tag="Cloud">
+                  <h3>Cloud Stream</h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- Search Results View -->
+            <div id="search-results-section" class="hidden">
+              <h2>Search Results</h2>
+              <div class="search-results-layout">
+                <!-- Top Result Card -->
+                <div class="top-result-container">
+                  <h3>Top Result</h3>
+                  <div class="top-result-card" id="top-result-card">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+                
+                <!-- Matching Songs List -->
+                <div class="songs-results-container">
+                  <h3>Songs</h3>
+                  <div class="search-songs-list" id="search-songs-list">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- View 3: Playlist Detail View (Shared for Playlists & Liked Songs) -->
+        <section id="view-playlist" class="content-view hidden">
+          <div class="playlist-header-container">
+            <div class="playlist-cover-wrapper">
+              <img src="idris Abkar_Full/idrees-abkar-banner.jpg" alt="Playlist Cover" id="playlist-view-cover">
+              <div class="upload-cover-overlay hidden">
+                <i data-lucide="edit-3"></i>
+                <span>Choose photo</span>
+              </div>
+            </div>
+            <div class="playlist-header-details">
+              <span class="playlist-type" id="playlist-view-type">PLAYLIST</span>
+              <h1 id="playlist-view-title">Liked Songs</h1>
+              <p class="playlist-description" id="playlist-view-description">Your favorited Quran recitations.</p>
+              <div class="playlist-meta-info">
+                <img src="idris Abkar_Full/idrees-abkar-banner.jpg" alt="Author Avatar" class="meta-author-avatar">
+                <span class="meta-author-name">Guest Reciter</span>
+                <span class="meta-dot">&bull;</span>
+                <span class="meta-tracks-count" id="playlist-view-count">0 songs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playlist Action Bar -->
+          <div class="playlist-actions-bar">
+            <button class="btn-play-playlist" id="playlist-play-btn">
+              <i data-lucide="play" class="icon-play"></i>
+              <i data-lucide="pause" class="icon-pause hidden"></i>
+            </button>
+            <button class="btn-icon-secondary" id="playlist-heart-btn" title="Remove from Library">
+              <i data-lucide="heart" class="filled-heart"></i>
+            </button>
+            <button class="btn-icon-secondary" id="playlist-delete-btn" title="Delete Playlist">
+              <i data-lucide="trash-2"></i>
+            </button>
+          </div>
+
+          <!-- Songs Table -->
+          <div class="playlist-songs-table-container">
+            <table class="songs-table">
+              <thead>
+                <tr>
+                  <th class="col-num">#</th>
+                  <th class="col-title">Title</th>
+                  <th class="col-album">Album</th>
+                  <th class="col-duration"><i data-lucide="clock"></i></th>
+                </tr>
+              </thead>
+              <tbody id="playlist-songs-rows">
+                <!-- Dynamically populated table rows -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- View 4: Library View -->
+        <section id="view-library" class="content-view hidden">
+          <div class="library-view-container">
+            <h2>Your Library</h2>
+            <div class="library-tabs">
+              <button class="library-tab active" data-tab="all">Playlists & Albums</button>
+              <button class="library-tab" data-tab="playlists">Playlists</button>
+              <button class="library-tab" data-tab="albums">Albums</button>
+            </div>
+            <div class="cards-grid" id="library-grid">
+              <!-- Populated dynamically with playlists/albums -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Player Sticky Footer Bar -->
+    <footer class="player-bar">
+      <!-- Left: Song details -->
+      <div class="player-left">
+        <div class="now-playing-song">
+          <img src="idris Abkar_Full/idrees-abkar-banner.jpg" alt="Song cover" class="now-playing-cover" id="player-track-cover">
+          <div class="now-playing-metadata">
+            <div class="now-playing-title" id="player-track-title">No recitation selected</div>
+            <div class="now-playing-artist" id="player-track-artist">Idris Abkar</div>
+          </div>
+          <button class="btn-icon-player" id="player-like-btn">
+            <i data-lucide="heart" class="empty-heart"></i>
+            <i data-lucide="heart" class="filled-heart hidden"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Center: Playback controls -->
+      <div class="player-center">
+        <div class="playback-controls">
+          <button class="btn-icon-control" id="btn-shuffle" title="Enable shuffle"><i data-lucide="shuffle"></i></button>
+          <button class="btn-icon-control" id="btn-prev" title="Previous"><i data-lucide="skip-back"></i></button>
+          <button class="btn-play-pause" id="btn-play-pause" title="Play">
+            <i data-lucide="play" class="icon-play"></i>
+            <i data-lucide="pause" class="icon-pause hidden"></i>
+          </button>
+          <button class="btn-icon-control" id="btn-next" title="Next"><i data-lucide="skip-forward"></i></button>
+          <button class="btn-icon-control" id="btn-repeat" title="Enable repeat"><i data-lucide="repeat"></i></button>
+        </div>
+
+        <div class="progress-bar-container">
+          <span class="time-label" id="current-time">0:00</span>
+          <div class="slider-wrapper">
+            <input type="range" id="progress-slider" min="0" max="100" value="0" step="0.1">
+          </div>
+          <span class="time-label" id="total-duration">0:00</span>
+        </div>
+      </div>
+
+      <!-- Right: Volume and Utilities -->
+      <div class="player-right">
+        <!-- Audio Visualizer icon animation -->
+        <div class="mini-visualizer hidden" id="mini-visualizer">
+          <span class="bar bar1"></span>
+          <span class="bar bar2"></span>
+          <span class="bar bar3"></span>
+          <span class="bar bar4"></span>
+        </div>
+
+        <button class="btn-icon-player" id="btn-queue" title="Queue"><i data-lucide="list-music"></i></button>
+        
+        <div class="volume-container">
+          <button class="btn-icon-player" id="btn-volume" title="Mute/Unmute"><i data-lucide="volume-2"></i></button>
+          <div class="slider-wrapper volume-slider-wrapper">
+            <input type="range" id="volume-slider" min="0" max="100" value="80">
+          </div>
+        </div>
+
+        <button class="btn-icon-player" id="btn-fullscreen" title="Fullscreen Visualizer"><i data-lucide="maximize-2"></i></button>
+      </div>
+    </footer >
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="main-audio"></audio>
+
+  <!-- Fullscreen Visualizer Overlay -->
+  <div class="fullscreen-overlay hidden" id="fullscreen-overlay">
+    <button class="close-fullscreen-btn" id="close-fullscreen-btn"><i data-lucide="minimize-2"></i></button>
+    <div class="fullscreen-content">
+      <div class="fullscreen-art-wrapper">
+        <img src="idris Abkar_Full/idrees-abkar-banner.jpg" alt="Art" id="fullscreen-art">
+        <div class="fullscreen-waveforms" id="waveform-container">
+          <!-- Visualizer bars -->
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+        </div>
+      </div>
+      <div class="fullscreen-meta">
+        <h2 id="fullscreen-title">No recitation selected</h2>
+        <p id="fullscreen-artist">Idris Abkar</p>
+      </div>
+      <div class="fullscreen-controls">
+        <button class="btn-icon-control" id="fs-btn-prev"><i data-lucide="skip-back"></i></button>
+        <button class="btn-play-pause large" id="fs-btn-play-pause">
+          <i data-lucide="play" class="icon-play"></i>
+          <i data-lucide="pause" class="icon-pause hidden"></i>
+        </button>
+        <button class="btn-icon-control" id="fs-btn-next"><i data-lucide="skip-forward"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Creating Playlist -->
+  <div class="modal-overlay hidden" id="playlist-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create Playlist</h2>
+        <button class="close-modal-btn" id="close-playlist-modal"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label for="playlist-name-input">Playlist Name</label>
+          <input type="text" id="playlist-name-input" placeholder="My Playlist #1" maxlength="32">
+        </div>
+        <div class="input-group">
+          <label for="playlist-desc-input">Description (Optional)</label>
+          <textarea id="playlist-desc-input" placeholder="Add an optional description" rows="3" maxlength="120"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="modal-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="modal-save-btn">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Context Menu for Track Rows (Add to playlist) -->
+  <div class="context-menu hidden" id="track-context-menu">
+    <ul>
+      <li id="cm-like-track"><i data-lucide="heart"></i> <span>Like Track</span></li>
+      <li class="has-submenu">
+        <i data-lucide="plus-circle"></i> <span>Add to Playlist</span>
+        <i data-lucide="chevron-right" class="submenu-arrow"></i>
+        <ul class="submenu" id="cm-playlist-submenu">
+          <!-- Dynamically populated playlists list -->
+        </ul>
+      </li>
+      <li id="cm-remove-from-playlist" class="hidden"><i data-lucide="trash"></i> <span>Remove from Playlist</span></li>
+    </ul>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Songs Data & Application Script -->
+  <script src="songs.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
